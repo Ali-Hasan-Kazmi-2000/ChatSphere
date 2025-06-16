@@ -1,23 +1,28 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Navbar } from './navbar/navbar';
+import { Account } from './_services/account';
+import { Home } from "./home/home";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Navbar, Home],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit {
-  http = inject(HttpClient);
-  protected title = 'Client';
-  users: any;
-
+  private accountServices = inject(Account); 
+ 
   ngOnInit() : void{
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next : (response) => { this.users = response},
-      error : (err) => {console.error('Error fetching users:', err);},
-      complete : () => {console.log('Request completed');}      
-    })
+   this.setCurrentUser();
   }
+
+  setCurrentUser(){
+    var userString = localStorage.getItem('user');
+    if(!userString) return;
+
+    var user = JSON.parse(userString);
+    this.accountServices.currentUser.set(user);
+  }
+ 
 }
