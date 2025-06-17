@@ -1,32 +1,30 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Account } from '../_services/account';
+import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
 export class Register {
-  private accountServices = inject(Account);
-  model : any = {};  
-  @Output() cancelRegister = new EventEmitter<boolean>();
+  accountServices = inject(Account);
+  private router = inject(Router);
+  private toastr = inject(ToastrService);
+  model : any = {};    
 
   register(){
     this.accountServices.register(this.model).subscribe({
       next: (response) => {
         console.log('Registration successful', response);
-        this.cancel();
+        this.router.navigateByUrl('/members');
       },
       error: (error) => {
-        console.error('Registration failed', error);        
+        this.toastr.error(error.error);        
       }
-  })};
-
-  cancel(){
-    this.cancelRegister.emit(true);    
-  }
-   
+  })};   
 }
