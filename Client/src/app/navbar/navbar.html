@@ -23,8 +23,13 @@
             <a routerLink="/messages" routerLinkActive="active" class="nav-link"
               >Messages</a
             >
-          </li>
+          </li>          
           }
+          <li class="nav-item">
+            <a routerLink="/error" routerLinkActive="active" class="nav-link"
+              >Error</a
+            >
+          </li>
         </ul>
 
         @if(this.accountServices.currentUser()){
@@ -61,7 +66,7 @@
             placeholder="Password"
             type="password"
           />
-          <button class="btn btn-outline-dark" type="submit">Login</button>
+          <button class="btn btn-success" type="submit">Login</button>
         </form>
         }
       </div>
