@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250620102941_UpdatedUserEntityFields")]
+    partial class UpdatedUserEntityFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
@@ -74,7 +77,7 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Entities.Photos", b =>
+            modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,8 +86,9 @@ namespace API.Data.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("IsMain")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PublicId")
                         .HasColumnType("TEXT");
@@ -100,10 +104,10 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Entities.Photos", b =>
+            modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "AppUser")
-                        .WithMany("Photos")
+                        .WithMany("Photo")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -113,7 +117,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
-                    b.Navigation("Photos");
+                    b.Navigation("Photo");
                 });
 #pragma warning restore 612, 618
         }

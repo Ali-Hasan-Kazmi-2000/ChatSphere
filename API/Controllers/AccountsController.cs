@@ -17,29 +17,31 @@ namespace API.Controllers
             if (await UserExists(registerDto.Username))
                 return BadRequest("Username is taken");
 
-            using var hmac = new HMACSHA512();
+            return Ok();
+            // using var hmac = new HMACSHA512();
 
-            AppUser user = new()
-            {
-                UserName = registerDto.Username,
-                PasswordHashed = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-            };
+            // AppUser user = new()
+            // {
+            //     UserName = registerDto.Username,
+            //     PasswordHashed = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+            //     PasswordSalt = hmac.Key
+            // };
 
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
+            // await context.Users.AddAsync(user);
+            // await context.SaveChangesAsync();
 
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = tokenService.CreateToken(user)
-            };
+            // return new UserDto
+            // {
+            //     Username = user.UserName,
+            //     Token = tokenService.CreateToken(user)
+            // };
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            Console.WriteLine("pass");
+            var user = await context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
 
             if (user == null)
                 return Unauthorized("Invalid username");

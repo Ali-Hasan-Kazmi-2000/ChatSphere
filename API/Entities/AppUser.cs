@@ -1,9 +1,29 @@
+using API.Extensions;
+
 namespace API.Entities;
 
 
-public class AppUser{
+public class AppUser
+{
     public int Id { get; set; }
     public required string UserName { get; set; }
-    public required byte[] PasswordHashed { get; set; }
-    public required byte[] PasswordSalt { get; set; }
+    public byte[] PasswordHashed { get; set; } = [];
+    public byte[] PasswordSalt { get; set; } = [];
+    public required string KnownAs { get; set; }
+    public DateOnly BirthDate { get; set; }
+    public DateTime Created { get; set; } = DateTime.UtcNow;
+    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+    public required string Gender { get; set; }
+    public string? Introduction { get; set; }
+    public string? Interests { get; set; }
+    public string? LookingFor { get; set; }
+    public required string City { get; set; }
+    public required string Country { get; set; }
+    public List<Photos> Photos { get; set; } = [];
+
+    // public int GetAge()
+    // {
+    //     return BirthDate.CalculateAge();
+    // }
 }
+
