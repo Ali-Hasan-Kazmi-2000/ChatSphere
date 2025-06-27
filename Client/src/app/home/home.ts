@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { Members } from '../_services/members';
 
 @Component({
   selector: 'app-home',
@@ -8,20 +8,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home implements OnInit {
-  http = inject(HttpClient);  
-  users: any = {};
+export class Home {
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
-
-  
-  getUsers(){
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next : (response) => { this.users = response},
-      error : (err) => {console.error('Error fetching users:', err);},
-      complete : () => {console.log('Request completed');}      
-    })
-  }
 }

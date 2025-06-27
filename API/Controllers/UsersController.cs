@@ -8,10 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-
+[Authorize]
 public class UsersController(IUserRepository userRepository) : BaseApiController
-{    
-    [AllowAnonymous]
+{        
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
     {
@@ -19,7 +18,7 @@ public class UsersController(IUserRepository userRepository) : BaseApiController
         return Ok(users);
     }
 
-    [Authorize]
+    
     [HttpGet("{username}")]
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {

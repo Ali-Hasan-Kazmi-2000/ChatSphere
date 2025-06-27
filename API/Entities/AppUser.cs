@@ -20,10 +20,5 @@ public class AppUser
     public required string City { get; set; }
     public required string Country { get; set; }
     public List<Photos> Photos { get; set; } = [];
-
-    // public int GetAge()
-    // {
-    //     return BirthDate.CalculateAge();
-    // }
 }
 
